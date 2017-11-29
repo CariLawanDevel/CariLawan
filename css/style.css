@@ -1,10 +1,10 @@
 .buttons button{
-    color: red;
+    color: white;
     float: right;
     display: block;
+    margin: -4.3% 0% 1% 93.5%;
 
 }
-    float: right; 
 
 table {
     border-collapse: collapse;
@@ -20,6 +20,117 @@ tr:nth-child(even){background-color: #f2f2f2}
 
 th {
     background-color: #4CAF50;
+    color: white;
+}
+
+ table{
+    width: 75%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.nav-sidebar { 
+    width: 100%;
+    padding: 8px 0; 
+    border-right: 1px solid #ddd;
+}
+.nav-sidebar a {
+    color: #333;
+    -webkit-transition: all 0.08s linear;
+    -moz-transition: all 0.08s linear;
+    -o-transition: all 0.08s linear;
+    transition: all 0.08s linear;
+    -webkit-border-radius: 4px 0 0 4px; 
+    -moz-border-radius: 4px 0 0 4px; 
+    border-radius: 4px 0 0 4px; 
+}
+.nav-sidebar .active a { 
+    cursor: default;
+    background-color: #428bca; 
+    color: #fff; 
+    text-shadow: 1px 1px 1px #666; 
+}
+.nav-sidebar .active a:hover {
+    background-color: #428bca;   
+}
+.nav-sidebar .text-overflow a,
+.nav-sidebar .text-overflow .media-body {
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis; 
+}
+
+/* Right-aligned sidebar */
+.nav-sidebar.pull-right { 
+    border-right: 0; 
+    border-left: 1px solid #ddd; 
+}
+.nav-sidebar.pull-right a {
+    -webkit-border-radius: 0 4px 4px 0; 
+    -moz-border-radius: 0 4px 4px 0; 
+    border-radius: 0 4px 4px 0; 
+}
+
+.keteranganadmin{
+       float: left;
+    clear: both;
+    margin-top: -182px;
+    margin-left: 230px;
+}
+
+#tambah_event button{
+    float: right;
+    margin: 0% 5% 1% 0%;
+    background-color: #18a8de;
+    border-color: #18a8de;
+    color: white;
+}
+
+#tambah_member button{
+    float: right;
+    margin: 0% 5% 1% 0%;
+    text-align: center;
+    background-color: #18a8de;
+    border-color: #18a8de;
+    color: white;
+}
+
+#tabel_meber th{
+text-align: center;
+}
+#tabel_event th{
+    border-color: #000000fa;
+    text-align: center;
+}
+
+#tabel_member th{
+    text-align: center;
+}
+
+#tabel_member td{
+    text-align: center;
+}
+
+#tabel_member td button{
+    background-color: #bb1313;
+    border-color: #ad1f1fdb;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#tabel_event td{
+    text-align: center;
+}
+
+#tabel_event td button{
+    background-color: #bb1313;
+    border-color: #ad1f1fdb;
+    border-radius: 5px;
+}
+
+#tabel_event td button a{
+    text-decoration: none;
     color: white;
 }
 
