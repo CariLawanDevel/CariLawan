@@ -2,7 +2,7 @@
 <div class="row text-center">
 	<?php
 
-	$latest=mysql_query("SELECT * FROM tb_event, tb_kategori WHERE tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event LIMIT 2");
+	$latest=mysql_query("SELECT * FROM tb_event, tb_kategori WHERE tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event LIMIT 4");
 
 	while($c=mysql_fetch_array($latest)){
 		$id_event = $c['id_event'];
@@ -13,7 +13,7 @@
 		$waktu = $c['waktu'];
 		$lokasi = $c['lokasi'];
 
-		$jum=mysql_query("SELECT COUNT(id_join) FROM tb_join WHERE id_member=$id_member AND id_event=$id_event");
+		$jum=mysql_query("SELECT COUNT(id_join) FROM tb_join WHERE id_event=$id_event");
 		$j=mysql_fetch_array($jum);
 		$jumlah_peserta_join = $j['COUNT(id_join)'];
 	?>
@@ -29,7 +29,7 @@
                 <?php echo $lokasi;?><br/></p>
 			</div>
 			<div class="card-footer">
-				<a class="btn btn-primary" href="#">Gabung Event</a>
+				<a class="btn btn-primary" href="event.php?id_event=<?php echo $id_event;?>">Gabung Event</a>
 			</div>
 		</div>
 	</div>

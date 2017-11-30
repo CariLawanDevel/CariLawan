@@ -3,7 +3,9 @@ session_start();
 
 include "_config.php";
 
-$id_member = $_SESSION['id_member'];
+if(isset($_SESSION['id_member'])){
+    $id_member = $_SESSION['id_member'];
+}
 
 ?>
 <!DOCTYPE html>

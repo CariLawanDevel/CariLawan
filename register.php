@@ -21,12 +21,12 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
-                                <label for="nama">Nama Depan</label>
-                                <input class="form-control" id="namaDepan" type="text" aria-describedby="nameHelp" placeholder="Masukkan Nama Depan">
+                                <label for="nama">Nama</label>
+                                <input name="nama_depan" class="form-control" id="namaDepan" type="text" aria-describedby="nameHelp" placeholder="Masukkan Nama Depan">
                             </div>
                             <div class="col-md-6">
                                 <label for="exampleInputLastName">Nama Belakang</label>
-                                <input class="form-control" id="namaBelakang" type="text" aria-describedby="nameHelp" placeholder="Masukkan Nama Belakang">
+                                <input name="nama_belakang" class="form-control" id="namaBelakang" type="text" aria-describedby="nameHelp" placeholder="Masukkan Nama Belakang">
                             </div>
                         </div>
                     </div>
@@ -34,51 +34,54 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <label for="email">Email</label>
-                                <input class="form-control" id="email" type="text" aria-describedby="nameHelp" placeholder="Masukkan Email">
+                                <input name="email" class="form-control" id="email" type="text" aria-describedby="nameHelp" placeholder="Masukkan Email">
                             </div>
                             <div class="col-md-6">
                                 <label for="noHp">No. HP</label>
-                                <input class="form-control" id="noHp" type="text" aria-describedby="nameHelp" placeholder="Masukkan Nomor HP">
+                                <input name="no_hp" class="form-control" id="noHp" type="phone" aria-describedby="nameHelp" placeholder="Masukkan Nomor HP">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
-                                <label for="jenisKelamin">Jenis kelamin</label>
-                                
+                                <label>Jenis Kelamin :</label>
+                                <select name="jenis_kelamin" class="form-control" id="jenis_kelamin" value="">
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="hobi">Hobi</label>
-                                <input class="form-control" id="hobi" type="text" aria-describedby="nameHelp" placeholder="Masukkan Hobi">
+                                <input name="hobi" class="form-control" id="hobi" type="text" aria-describedby="nameHelp" placeholder="Masukkan Hobi">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="alamat">Alamat</label>
-                        <textarea class="form-control" id="alamat" type="text" aria-describedby="emailHelp" placeholder="Masukkan Alamat" rows="3"></textarea>
+                        <textarea name="alamat" class="form-control" id="alamat" type="text" aria-describedby="emailHelp" placeholder="Masukkan Alamat" rows="3"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="bio">Bio</label>
-                        <textarea class="form-control" id="bio" type="text" aria-describedby="emailHelp" placeholder="Masukkan Bio" rows="2"></textarea>
+                        <textarea name="bio" class="form-control" id="bio" type="text" aria-describedby="emailHelp" placeholder="Masukkan Bio" rows="2"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input class="form-control" id="username" type="text" aria-describedby="emailHelp" placeholder="Masukkan Username">
+                        <input name="username" class="form-control" id="username" type="text" aria-describedby="emailHelp" placeholder="Masukkan Username">
                     </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
                                 <label for="exampleInputPassword1">Password</label>
-                                <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+                                <input name="password_1" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
                             </div>
                             <div class="col-md-6">
                                 <label for="exampleConfirmPassword">Confirm password</label>
-                                <input class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
+                                <input name="password_2" class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-primary btn-block" href="login.php">Register</a>
+                    <button name="register" class="btn btn-primary btn-block">Daftar</button>
                 </form>
                 <div class="text-center">
                     <a class="d-block small mt-3" href="login.php">Sudah punya akun ? Login di sini</a>
@@ -87,6 +90,55 @@
             </div>
         </div>
     </div>
+
+    <?php
+
+    include('_config.php');
+
+    if(isset($_POST['register'])) {
+        $nama_member=$_POST['nama_depan']." ".$_POST['nama_belakang'];
+        $jenis_kelamin=$_POST['jenis_kelamin'];
+        $alamat=$_POST['alamat'];
+        $no_hp=$_POST['no_hp'];
+        $email=$_POST['email'];
+        $hobi=$_POST['hobi'];
+        $bio=$_POST['bio'];
+        $username=$_POST['username'];
+        if($_POST['password_1']==$_POST['password_2']){
+            $password=$_POST['password_1'];
+        }
+
+        $hasil=mysql_query("INSERT INTO tb_member VALUES ('','$nama_member','$jenis_kelamin','$alamat','$no_hp','$email','$hobi','$bio','')");
+        if($hasil){
+            echo "berhasil get member";
+            $get_id=mysql_query("SELECT id_member FROM tb_member WHERE email='$email'");
+            $c=mysql_fetch_array($get_id);
+            $id_member=$c['id_member'];
+
+            $hasil_user=mysql_query("INSERT INTO tb_user VALUES (,'$username','$password','member','$id_member')");
+            if($hasil_user){
+                header("location:profile.php");
+            }
+        }
+    } 
+
+    $username=@$_POST['username'];
+    $password=@$_POST['password'];
+
+    if(isset($_GET['login_attempt'])){
+        $cek = mysql_query("SELECT * FROM tb_user WHERE username='$username' AND password='$password'");
+        if(mysql_num_rows($cek)==1){ //jika berhasil akan bernilai 1
+            $c = mysql_fetch_array($cek);        
+            $_SESSION['level']=$c['level'];
+            $_SESSION['id_member']=$c['id_member'];
+
+            header("location:index.php");
+        }
+        else{
+            echo "<script>alert('Username dan Password yang anda masukan belum benar, silahkan login kembali')</script>";
+        }
+    }
+    ?>
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

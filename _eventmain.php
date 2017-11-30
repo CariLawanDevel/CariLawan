@@ -30,7 +30,7 @@
                 $lokasi = $c['lokasi'];
                 $nama_pj = $c['nama_member'];
 
-                $jum=mysql_query("SELECT COUNT(id_join) FROM tb_join WHERE id_member=$id_member AND id_event=$id_event");
+                $jum=mysql_query("SELECT COUNT(id_join) FROM tb_join WHERE id_event=$id_event");
                 $j=mysql_fetch_array($jum);
                 $jumlah_peserta_join = $j['COUNT(id_join)'];
             ?>
