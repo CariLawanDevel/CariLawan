@@ -13,10 +13,10 @@
 
             if(isset($_GET['id_kategori'])){
                 $id_kategori=$_GET['id_kategori'];
-                $latest=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.id_member AND tb_kategori.id_kategori=tb_event.id_kategori AND tb_kategori.id_kategori=$id_kategori ORDER BY id_event");
+                $latest=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori AND tb_kategori.id_kategori=$id_kategori ORDER BY id_event");
             }
             else{
-                $latest=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.id_member AND tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event");
+                $latest=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event");
             }
 
             while($c=mysql_fetch_array($latest)){

@@ -1,5 +1,8 @@
 <?php
 
+//udah nge get id event
+
+//get detail event
 $event=mysql_query("SELECT * FROM tb_event, tb_kategori WHERE id_event=$id_event AND tb_kategori.id_kategori=tb_event.id_kategori");
 $c=mysql_fetch_array($event);
 $id_event = $c['id_event'];
@@ -12,6 +15,7 @@ $waktu = $c['waktu'];
 $lokasi = $c['lokasi'];
 $biaya = $c['biaya'];
 
+//get jumlah peserta yang join event
 $jum=mysql_query("SELECT COUNT(id_join) FROM tb_join WHERE id_event=$id_event");
 $j=mysql_fetch_array($jum);
 $jumlah_peserta_join = $j['COUNT(id_join)'];
@@ -41,7 +45,21 @@ $jumlah_peserta_join = $j['COUNT(id_join)'];
             Waktu : <?php echo $waktu;?><br/>
             Tempat : <?php echo $lokasi;?><br/>
             Biaya : <?php echo $biaya;?></p>
-            <a href="#" class="btn btn-primary">Gabung Event</a>
+            <?php
+
+            //check sudah gabung atau belum
+            if(isset($_SESSION['id_member'])){
+                $is_join=mysql_query("SELECT * FROM tb_join WHERE id_member=$id_member AND id_event=$id_event");
+                $ij=mysql_fetch_array($is_join);
+                if($ij){
+                    echo "<a href=\"#\" class=\"btn btn-primary\">Anda Sudah Tergabung</a>";
+                }
+                else{
+                    echo "<a href=\"_join.php?id_event=$id_event\" class=\"btn btn-primary\">Gabung</a>";
+                }
+            }
+
+            ?>
         </div>
     </div>
     <h3 class="my-4">Peserta Event</h3>

@@ -1,10 +1,10 @@
-<h2 class="mt-4 text-center" style="margin-bottom: 40px;">LATEST EVENT</h2>
+<h2 class="mt-5 text-center" style="margin-bottom: 40px;">EVENT DIIKUTI</h2>
 <div class="row text-center">
 	<?php
 
-	$latest=mysql_query("SELECT * FROM tb_event, tb_kategori WHERE tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event LIMIT 4");
+	$joined=mysql_query("SELECT * FROM tb_join, tb_event, tb_kategori WHERE tb_kategori.id_kategori=tb_event.id_kategori AND tb_join.id_event=tb_event.id_event AND tb_join.id_member=$id_member");
 
-	while($c=mysql_fetch_array($latest)){
+	while($c=mysql_fetch_array($joined)){
 		$id_event = $c['id_event'];
 		$nama_event = $c['nama_event'];
 		$kategori = $c['nama_kategori'];
@@ -29,10 +29,18 @@
                 <?php echo $lokasi;?><br/></p>
 			</div>
 			<div class="card-footer">
-				<a class="btn btn-primary" href="event.php?id_event=<?php echo $id_event;?>">Lihat Event</a>
+				<a class="btn btn-primary" href="event.php?id_event=<?php echo $id_event;?>">Chat Room</a>
 			</div>
 		</div>
 	</div>
 	<?php }?>
-	
+</div>
+<div class="row text-center">
+	<div class="col-lg-3 col-md-6 mx-auto">
+		<div class="card">
+			<div class="card-body">
+				<a class="btn btn-primary" href="tambah_event.php">Tambah Event</a>
+			</div>
+		</div>
+	</div>
 </div>

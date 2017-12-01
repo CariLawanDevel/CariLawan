@@ -12,12 +12,43 @@
 
     <link href="css/sb-admin.css" rel="stylesheet">
 </head>
+<?php
+
+include('_config.php');
+
+if(isset($_POST['register'])) {
+    $nama_member=$_POST['nama_depan']." ".$_POST['nama_belakang'];
+    $jenis_kelamin=$_POST['jenis_kelamin'];
+    $alamat=$_POST['alamat'];
+    $no_hp=$_POST['no_hp'];
+    $email=$_POST['email'];
+    $hobi=$_POST['hobi'];
+    $bio=$_POST['bio'];
+    $username=$_POST['username'];
+    if($_POST['password_1']==$_POST['password_2']){
+        $password=$_POST['password_1'];
+    }
+
+    $hasil=mysql_query("INSERT INTO tb_member SET nama_member='$nama_member', jenis_kelamin='$jenis_kelamin', alamat='$alamat', no_hp='$no_hp', email='$email', hobi='$hobi', bio='$bio'");
+    if($hasil){
+        $get_id=mysql_query("SELECT id_member FROM tb_member WHERE email='$email'") or die (error_reporting());
+        $c=mysql_fetch_array($get_id);
+        $id_member=$c['id_member'];
+
+        $hasil_user=mysql_query("INSERT INTO tb_user SET username='$username', password='$password', level='member', id_member='$id_member'");
+        if($hasil_user){
+            header("location:login.php");
+        }
+    }
+} 
+?>
+
 <body class="bg-dark">
     <div class="container">
         <div class="card card-register mx-auto mt-5">
             <div class="card-header text-center">Daftar Member Cari Lawan</div>
             <div class="card-body">
-                <form>
+                <form method="post">
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
@@ -90,55 +121,6 @@
             </div>
         </div>
     </div>
-
-    <?php
-
-    include('_config.php');
-
-    if(isset($_POST['register'])) {
-        $nama_member=$_POST['nama_depan']." ".$_POST['nama_belakang'];
-        $jenis_kelamin=$_POST['jenis_kelamin'];
-        $alamat=$_POST['alamat'];
-        $no_hp=$_POST['no_hp'];
-        $email=$_POST['email'];
-        $hobi=$_POST['hobi'];
-        $bio=$_POST['bio'];
-        $username=$_POST['username'];
-        if($_POST['password_1']==$_POST['password_2']){
-            $password=$_POST['password_1'];
-        }
-
-        $hasil=mysql_query("INSERT INTO tb_member VALUES ('','$nama_member','$jenis_kelamin','$alamat','$no_hp','$email','$hobi','$bio','')");
-        if($hasil){
-            echo "berhasil get member";
-            $get_id=mysql_query("SELECT id_member FROM tb_member WHERE email='$email'");
-            $c=mysql_fetch_array($get_id);
-            $id_member=$c['id_member'];
-
-            $hasil_user=mysql_query("INSERT INTO tb_user VALUES (,'$username','$password','member','$id_member')");
-            if($hasil_user){
-                header("location:profile.php");
-            }
-        }
-    } 
-
-    $username=@$_POST['username'];
-    $password=@$_POST['password'];
-
-    if(isset($_GET['login_attempt'])){
-        $cek = mysql_query("SELECT * FROM tb_user WHERE username='$username' AND password='$password'");
-        if(mysql_num_rows($cek)==1){ //jika berhasil akan bernilai 1
-            $c = mysql_fetch_array($cek);        
-            $_SESSION['level']=$c['level'];
-            $_SESSION['id_member']=$c['id_member'];
-
-            header("location:index.php");
-        }
-        else{
-            echo "<script>alert('Username dan Password yang anda masukan belum benar, silahkan login kembali')</script>";
-        }
-    }
-    ?>
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

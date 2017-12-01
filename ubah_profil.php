@@ -5,7 +5,7 @@ include "_config.php";
 
 $id_member = $_SESSION['id_member'];
 
-$tampil=mysql_query("SELECT * FROM tb_member, tb_user where tb_member.id_member='$id_member'");
+$tampil=mysql_query("SELECT * FROM tb_member, tb_user WHERE tb_member.id_member=tb_user.id_member AND tb_member.id_member='$id_member'");
 $baris=mysql_fetch_array($tampil);
 
 $nama_member=$baris['nama_member'];

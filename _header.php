@@ -14,9 +14,16 @@
 				<li class="nav-link"><a class="nav-link" href="#">About</a></li>
 				<?php
 				if(@$_SESSION['level']=="member"){
+					$id_member=$_SESSION['id_member'];
+
+					$nama=mysql_query("SELECT nama_member FROM tb_member WHERE id_member=$id_member");
+					$c=mysql_fetch_array($nama);
+
+					$nama_member=$c['nama_member'];
+
 				?>
 					<li class="nav-link dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <b><?php echo $nama_member; ?></b></a>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
 							<a class="dropdown-item" href="dashboard.php">Dashboard</a>
 	                        <a class="dropdown-item" href="profile.php">Profil Saya</a>
@@ -29,7 +36,7 @@
 				else{
 				?>
 					<li class="nav-link dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Akun</a>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
 		                    <a class="dropdown-item" href="login.php">Login</a>
 						</div>

@@ -63,7 +63,7 @@ if(isset($_POST['edit'])) {
                         </div>
                     </div>
                     <div id="success"></div>
-                    <button name="edit" type="submit" class="btn btn-primary" id="edit">Ubah Profil</button>
+                    <button name="edit" type="submit" class="btn btn-primary" id="edit">Ubah Password</button>
                 </form>
             </div>
         </div>
