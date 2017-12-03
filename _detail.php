@@ -58,6 +58,9 @@ $jumlah_peserta_join = $j['COUNT(id_join)'];
                     echo "<a href=\"_join.php?id_event=$id_event\" class=\"btn btn-primary\">Gabung</a>";
                 }
             }
+            else{
+                echo "<a href=\"login.php\" class=\"btn btn-primary\">Jika ingin bergabung anda harus Login</a>";
+            }
 
             ?>
         </div>

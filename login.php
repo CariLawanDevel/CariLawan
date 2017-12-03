@@ -46,14 +46,15 @@
     <?php
     session_start();
     include('_config.php');
+    include('db_function.php');
 
     $username=@$_POST['username'];
     $password=@$_POST['password'];
 
     if(isset($_GET['login_attempt'])){
-        $cek = mysql_query("SELECT * FROM tb_user WHERE username='$username' AND password='$password'");
-        if(mysql_num_rows($cek)==1){ //jika berhasil akan bernilai 1
-            $c = mysql_fetch_array($cek);        
+        $result = login($username, $password);
+        if(mysql_num_rows($result)==1){ //jika berhasil akan bernilai 1
+            $c = mysql_fetch_array($result);
             $_SESSION['level']=$c['level'];
             $_SESSION['id_member']=$c['id_member'];
 

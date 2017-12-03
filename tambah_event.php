@@ -96,14 +96,14 @@ if(isset($_POST['tambah_event'])) {
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Tanggal : </label>
-                            <input class="form-control" id="date" name="tanggal" placeholder="MM/DD/YYY" type="text"/>
+                            <input class="form-control" id="date" name="tanggal" placeholder="MM/DD/YYY" type="date"/>
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Waktu : </label>
-                            <input class="form-control" id="time" name="waktu" placeholder="HH:MM" type="text"/>
+                            <input class="form-control" id="time" name="waktu" placeholder="HH:MM" type="time"/>
                             <p class="help-block"></p>
                         </div>
                     </div>
