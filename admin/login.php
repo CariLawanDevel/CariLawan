@@ -8,14 +8,14 @@
 
     <title>Website Cari Lawan</title>
 
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="../css/sb-admin.css" rel="stylesheet">
 </head>
 <body class="bg-dark">
     <div class="container">
         <div class="card card-register mx-auto mt-5">
-            <div class="card-header text-center">Login Member Cari Lawan</div>
+            <div class="card-header text-center">Login Admin Cari Lawan</div>
             <div class="card-body">
                 <form action="login.php?login_attempt=1" method="post">
                     <div class="form-group">
@@ -33,32 +33,27 @@
                             </label>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-block">Masuk</button>
+                    <button class="btn btn-primary btn-block mb-3">Masuk</button>
                 </form>
-                <div class="text-center">
-                    <a class="d-block small mt-3" href="register.php">Belum punya akun ? Daftar di sini</a>
-                    <a class="d-block small" href="forgot-password.php">Lupa Password ?</a>
-                </div>
             </div>
         </div>
     </div>
 
     <?php
     session_start();
-    include('_config.php');
-    include('db_function.php');
+    include('../_config.php');
 
     $username=@$_POST['username'];
     $password=@$_POST['password'];
 
     if(isset($_GET['login_attempt'])){
-        $result = login($username, $password);
-        if($result==1){ //jika berhasil akan bernilai 1
-            $c = mysql_fetch_array($result);
+        $cek = mysql_query("SELECT * FROM tb_admin WHERE username='$username' AND password='$password'") or die(mysql_error());
+        if(mysql_num_rows($cek)==1){ //jika berhasil akan bernilai 1
+            $c = mysql_fetch_array($cek);
             $_SESSION['level']=$c['level'];
-            $_SESSION['id_member']=$c['id_member'];
+            echo $_SESSION['level'];
 
-            // header("location:index.php");
+            header("location:index.php");
         }
         else{
             echo "<script>alert('Username dan Password yang anda masukan belum benar, silahkan login kembali')</script>";
