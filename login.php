@@ -52,13 +52,15 @@
     $password=@$_POST['password'];
 
     if(isset($_GET['login_attempt'])){
-        $result = login($username, $password);
+        $cek = mysql_query("SELECT * FROM tb_user WHERE username='$username' AND password='$password'");
+        $result = mysql_num_rows($cek);
+        echo $result;
         if($result==1){ //jika berhasil akan bernilai 1
-            $c = mysql_fetch_array($result);
+            $c = mysql_fetch_array($cek);
             $_SESSION['level']=$c['level'];
             $_SESSION['id_member']=$c['id_member'];
 
-            // header("location:index.php");
+            header("location:index.php");
         }
         else{
             echo "<script>alert('Username dan Password yang anda masukan belum benar, silahkan login kembali')</script>";

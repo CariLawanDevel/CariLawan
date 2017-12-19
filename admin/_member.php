@@ -1,3 +1,16 @@
+<?php 
+
+if(isset($_GET['hapus'])) {
+    $id_member=$_GET['hapus'];
+
+    $hasil=mysql_query("DELETE FROM tb_join WHERE id_member='$id_member'");
+    $hasil=mysql_query("DELETE FROM tb_user WHERE id_member='$id_member'");
+    $hasil=mysql_query("DELETE FROM tb_event WHERE id_member='$id_member'");
+    $hasil=mysql_query("DELETE FROM tb_member WHERE id_member='$id_member'");
+    header("location:manage.php?page=member");
+}
+
+?>
 <div class="container">
 
     <h1 class="mt-4 mb-3">Manage Member</h1>
@@ -30,25 +43,39 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                            $sql=mysql_query("SELECT * FROM tb_member, tb_user WHERE tb_member.id_member=tb_user.id_member ORDER BY tb_member.id_member");
+                            while($data=mysql_fetch_array($sql)){
+                                $id_member=$data['id_member'];
+                                $nama_member=$data['nama_member'];
+                                $jenis_kelamin=$data['jenis_kelamin'];
+                                $alamat=$data['alamat'];
+                                $no_hp=$data['no_hp'];
+                                $email = $data['email'];
+                                $hobi=$data['hobi'];
+                                $bio=$data['bio'];
+                                $username=$data['username'];
+                            ?>
                             <tr>
-                                <td>1</td>
-                                <td>Nikko Eka Saputra</td>
-                                <td>L</td>
-                                <td>Jakarta</td>
-                                <td>08988190546</td>
-                                <td>nikkoeka04@gmail.com</td>
-                                <td>Renang</td>
-                                <td>It's better than tommorow</td>
-                                <td>Futsal</td>
+                                <td><?php echo $id_member ?></td>
+                                <td><?php echo $nama_member ?></td>
+                                <td><?php echo $jenis_kelamin ?></td>
+                                <td><?php echo $alamat ?></td>
+                                <td><?php echo $no_hp ?></td>
+                                <td><?php echo $email ?></td>
+                                <td><?php echo $hobi ?></td>
+                                <td><?php echo $bio ?></td>
+                                <td><?php echo $username ?></td>
                                 <td>
-                                    <a class="btn btn-primary" href="">
+                                    <a class="btn btn-primary" href="manage.php?tambah=tambah-member&id_member=<?php echo $id_member;?>">
                                         <i class="glyphicon glyphicon-pencil"></i>Ubah
                                     </a>
-                                    <a class="btn btn-danger" href="">
+                                    <a class="btn btn-danger" href="manage.php?page=member&hapus=<?php echo $id_member;?>">
                                         <i class="glyphicon glyphicon-remove"></i>Hapus
                                     </a>
                                 </td>
                             </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>

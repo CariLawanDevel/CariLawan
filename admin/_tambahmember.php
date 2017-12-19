@@ -1,39 +1,62 @@
 <?php
 
+if(isset($_POST['tambah_member'])) {
+    $nama_member=$_POST['nama_member'];
+    $jenis_kelamin=$_POST['jenis_kelamin'];
+    $alamat=$_POST['alamat'];
+    $no_hp=$_POST['no_hp'];
+    $email = $_POST['email'];
+    $hobi=$_POST['hobi'];
+    $bio=$_POST['bio'];
+    $username=$_POST['username'];
+    $password=$_POST['password'];
 
-date_default_timezone_set('Asia/Jakarta');
-
-//id member fungsinya sebagai PJ
-
-if(isset($_POST['tambah_event'])) {
-    $tanggal = date('Y-m-d H:i:s');
-
-    $nama_event=$_POST['nama_event'];
-    $kategori=$_POST['kategori'];
-    $deskripsi=$_POST['deskripsi'];
-    $tanggal=$_POST['tanggal'];
-    $waktu=$_POST['waktu'];
-    $jumlah_peserta=$_POST['jumlah_peserta'];
-    $lokasi=$_POST['lokasi'];
-    $biaya=$_POST['biaya'];
-    $banner_event = rand(1000,100000)."-".$_FILES['banner_event']['name'];
-    $banner_loc = $_FILES['banner_event']['tmp_name'];
-    $folder="images/event/";
-    move_uploaded_file($banner_loc,$folder.$banner_event);
-
-    $hasil=mysql_query("INSERT INTO tb_event SET nama_event='$nama_event', id_kategori='$kategori', deskripsi='$deskripsi', tanggal='$tanggal', waktu='$waktu', jumlah_peserta='$jumlah_peserta', lokasi='$lokasi', biaya='$biaya', banner_event='$banner_event', pj_event='$id_member'");
+    $hasil=mysql_query("INSERT INTO tb_member SET nama_member='$nama_member', jenis_kelamin='$jenis_kelamin', alamat='$alamat', no_hp='$no_hp', email='$email', hobi='$hobi', bio='$bio'");
     if($hasil){
-        echo "berhasil get member";
-        $get_id=mysql_query("SELECT id_event FROM tb_event WHERE nama_event='$nama_event' AND deskripsi='$deskripsi'") or die (error_reporting());
+        $get_id=mysql_query("SELECT id_member FROM tb_member WHERE nama_member='$nama_member' AND email='$email'") or die (error_reporting());
         $c=mysql_fetch_array($get_id);
-        $id_event=$c['id_event'];
+        $id_member=$c['id_member'];
 
-        $join=mysql_query("INSERT INTO tb_join SET id_member='$id_member', id_event='$id_event', tanggal_join='$tanggal'");
+        $join=mysql_query("INSERT INTO tb_user SET id_member='$id_member', username='$username', password='$password', level='member'");
         if($join){
-            header("location:dashboard.php");
+            header("location:manage.php?page=member");
         }
     }
 } 
+
+if(isset($_GET['id_member'])) {
+    $id_member=$_GET['id_member'];
+
+    $hasil=mysql_query("SELECT * FROM tb_member, tb_user WHERE tb_member.id_member=tb_user.id_member AND tb_member.id_member='$id_member'");
+    $c=mysql_fetch_array($hasil);
+    $nama_member=$c['nama_member'];
+    $jenis_kelamin=$c['jenis_kelamin'];
+    $alamat=$c['alamat'];
+    $no_hp=$c['no_hp'];
+    $email = $c['email'];
+    $hobi=$c['hobi'];
+    $bio=$c['bio'];
+    $username=$c['username'];
+}
+if(isset($_POST['edit_member'])) {
+    $nama_member=$_POST['nama_member'];
+    $jenis_kelamin=$_POST['jenis_kelamin'];
+    $alamat=$_POST['alamat'];
+    $no_hp=$_POST['no_hp'];
+    $email = $_POST['email'];
+    $hobi=$_POST['hobi'];
+    $bio=$_POST['bio'];
+    $username=$_POST['username'];
+    $password=$_POST['password'];
+
+    $hasil=mysql_query("UPDATE tb_member SET nama_member='$nama_member', jenis_kelamin='$jenis_kelamin', alamat='$alamat', no_hp='$no_hp', email='$email', hobi='$hobi', bio='$bio' WHERE id_member='$id_member'");
+    if($hasil){
+        $hasil=mysql_query("UPDATE tb_user SET username='$username', password='$password' WHERE id_member='$id_member'");
+        if($hasil){
+            header("location:manage.php?page=member");
+        }
+    }
+}
 
 ?>
 
@@ -60,83 +83,99 @@ if(isset($_POST['tambah_event'])) {
                 <form id="contactForm" action="" method="post" enctype="multipart/form-data" novalidate>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Nama Event : </label>
-                            <input name="nama_event" type="text" class="form-control" id="name" value="">
+                            <label>Nama Member : </label>
+                            <input name="nama_member" type="text" class="form-control" id="name" value="<?php
+                            if(isset($_GET['id_member'])){
+                                echo $nama_member;
+                            } ?>">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Kategori : </label>
-                            <select name="kategori" class="form-control" id="jenis_kelamin" value="<?php echo $jenis_kelamin; ?>">
-                                <?php
-
-                                $cat=mysql_query("SELECT * FROM tb_kategori");
-
-                                while($c=mysql_fetch_array($cat)){
-                                    $id_kategori = $c['id_kategori'];
-                                    $nama_kategori = $c['nama_kategori'];
-                                ?>
-                                <option value="<?php echo $id_kategori;?>"><?php echo $nama_kategori;?></option>
-                                <?php }?>
+                            <label>Jenis Kelamin : </label>
+                            <select name="jenis_kelamin" class="form-control" id="jenis_kelamin" value="<?php
+                            if(isset($_GET['id_member'])){
+                                echo $jenis_kelamin;
+                            } ?>">
+                                <option value="L">Laki-laki</option>
+                                <option value="P">Perempuan</option>
                             </select>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Deskripsi :</label>
-                            <textarea name="deskripsi" rows="3" cols="100" class="form-control" id="alamat" maxlength="999" style="resize:none"></textarea>
+                            <label>Alamat :</label>
+                            <textarea name="alamat" rows="3" cols="100" class="form-control" id="alamat" maxlength="999" style="resize:none"><?php
+                            if(isset($_GET['id_member'])){
+                                echo $alamat;
+                            } ?></textarea>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Tanggal : </label>
-                            <input class="form-control" id="date" name="tanggal" placeholder="MM/DD/YYY" type="date"/>
+                            <label>No. HP : </label>
+                            <input name="no_hp" type="text" class="form-control" id="no_hp" value="<?php
+                            if(isset($_GET['id_member'])){
+                                echo $no_hp;
+                            } ?>">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Waktu : </label>
-                            <input class="form-control" id="time" name="waktu" placeholder="HH:MM" type="time"/>
+                            <label>Email : </label>
+                            <input name="email" type="text" class="form-control" id="email" value="<?php
+                            if(isset($_GET['id_member'])){
+                                echo $email;
+                            } ?>">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Jumlah Peserta : </label>
-                            <input name="jumlah_peserta" type="number" class="form-control" id="jumlah_peserta" value="">
+                            <label>Hobi : </label>
+                            <input name="hobi" type="text" class="form-control" id="hobi" value="<?php
+                            if(isset($_GET['id_member'])){
+                                echo $hobi;
+                            } ?>">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Lokasi : </label>
-                            <textarea name="lokasi" rows="3" cols="100" class="form-control" id="lokasi" maxlength="999" style="resize:none"></textarea>
+                            <label>Bio :</label>
+                            <textarea name="bio" rows="3" cols="100" class="form-control" id="bio" maxlength="999" style="resize:none"><?php
+                            if(isset($_GET['id_member'])){
+                                echo $bio;
+                            } ?></textarea>
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <label>Username : </label>
+                            <input name="username" type="text" class="form-control" id="username" value="<?php
+                            if(isset($_GET['id_member'])){
+                                echo $username;
+                            } ?>">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Biaya : </label>
-                            <input name="biaya" type="text" class="form-control" id="biaya" value="">
+                            <label>Password : </label>
+                            <input name="password" type="password" class="form-control" id="password" value="">
                             <p class="help-block"></p>
                         </div>
                     </div>
-                    <div class="control-group form-group">
-                        <div class="controls">
-                            <label>Banner Event :</label>
-                            <div class="input-group">
-                                <span class="input-group-btn">
-                                    <span class="btn btn-default btn-file">
-                                        <input name="banner_event" type="file" id="foto">
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div id="success"></div>
-                    <button name="tambah_event" type="submit" class="btn btn-primary" id="edit">Buat Event</button>
+                    <?php if(isset($_GET['id_member'])){
+                        echo "<button name=\"edit_member\" type=\"submit\" class=\"btn btn-primary\" id=\"edit\">Edit Member</button>";
+                    }
+                    else {
+                        echo "<button name=\"tambah_member\" type=\"submit\" class=\"btn btn-primary\" id=\"tambah\">Tambah Member</button>";
+                    } ?>
                 </form>
             </div>
         </div>

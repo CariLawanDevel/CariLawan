@@ -3,8 +3,9 @@
 if(isset($_GET['hapus'])) {
     $id_event=$_GET['hapus'];
 
-    $hasil=mysql_query("DELETE FROM tb_event WHERE id_event='$id_event'");
+    $hasil=mysql_query("DELETE FROM tb_join WHERE id_event='$id_event'");
     if($hasil){
+        $hasil=mysql_query("DELETE FROM tb_event WHERE id_event='$id_event'");
         header("location:manage.php?page=event");
     }
 }
