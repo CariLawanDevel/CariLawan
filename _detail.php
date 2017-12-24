@@ -44,7 +44,7 @@ $jumlah_peserta_join = $j['COUNT(id_join)'];
             Hari/Tanggal : <?php echo $tanggal;?><br/>
             Waktu : <?php echo $waktu;?><br/>
             Tempat : <?php echo $lokasi;?><br/>
-            Biaya : <?php echo $biaya;?></p>
+            Biaya : <?php echo $biaya;?></p><br/>
             <?php
 
             //check sudah gabung atau belum
@@ -90,5 +90,24 @@ $jumlah_peserta_join = $j['COUNT(id_join)'];
             </div>
         </div>
         <?php }?>
+    </div>
+    <?php
+        $id_member = $_SESSION['id_member'];
+        $member=mysql_query("SELECT * FROM tb_member WHERE id_member=$id_member");
+        $c=mysql_fetch_array($member);
+        $nama_member = $c['nama_member'];
+    ?>
+    
+    <h3 class="my-4">Chatroom (<?php echo $nama_member; ?>)</h3>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 mb-4">
+            <div class="chat">
+                <?php 
+                if(isset($_SESSION['id_member'])){
+                    include("chatbox.php");
+                }
+                ?>
+            </div>
+        </div>
     </div>
 </div>

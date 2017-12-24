@@ -20,6 +20,8 @@ if(isset($_SESSION['id_member'])){
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="css/chat.css">
+
 </head>
 <body>
     <?php include '_header.php'; ?>

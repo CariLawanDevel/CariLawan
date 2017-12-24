@@ -37,6 +37,7 @@ if(isset($_SESSION['id_member'])){
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
     <script src="js/custom.js"></script>
+    <script src="js/chat.js"></script>
 
 </body>
 </html>
