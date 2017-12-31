@@ -9,7 +9,7 @@ php:
 env:
   - EX=Kalkulator
  
-script: phpunit --configuration test/$EX.Test.php
+script: phpunit -c test/KalkulatorTest.php
 
 matrix:
   allow_failures:
