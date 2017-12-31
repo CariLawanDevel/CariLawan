@@ -18,5 +18,5 @@ matrix:
   fast_finish: true
 
 notifications:
-  on_success: never
+  on_success: always
   on_failure: always
