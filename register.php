@@ -116,7 +116,6 @@ if(isset($_POST['register'])) {
                 </form>
                 <div class="text-center">
                     <a class="d-block small mt-3" href="login.php">Sudah punya akun ? Login di sini</a>
-                    <a class="d-block small" href="forgot-password.php">Lupa Password</a>
                 </div>
             </div>
         </div>

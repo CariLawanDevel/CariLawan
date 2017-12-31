@@ -13,10 +13,10 @@
 
             if(isset($_GET['id_kategori'])){
                 $id_kategori=$_GET['id_kategori'];
-                $latest=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori AND tb_kategori.id_kategori=$id_kategori ORDER BY id_event");
+                $latest=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori AND tb_kategori.id_kategori=$id_kategori ORDER BY id_event DESC");
             }
             else{
-                $latest=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event");
+                $latest=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event DESC");
             }
 
             while($c=mysql_fetch_array($latest)){
@@ -29,13 +29,15 @@
                 $waktu = $c['waktu'];
                 $lokasi = $c['lokasi'];
                 $nama_pj = $c['nama_member'];
+                $banner = $c['banner_event'];
 
                 $jum=mysql_query("SELECT COUNT(id_join) FROM tb_join WHERE id_event=$id_event");
                 $j=mysql_fetch_array($jum);
                 $jumlah_peserta_join = $j['COUNT(id_join)'];
+
             ?>
             <div class="card mb-4">
-                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                <img class="card-img-top" style="height: 300px;" src="images/event/<?php echo $banner;?>" alt="Card image cap">
                 <div class="card-body">
                     <h2 class="card-title"><?php echo $nama_event;?></h2>
                     <h6 class="my-3"><i>Kategori <?php echo $kategori;?></i></h6>
@@ -43,7 +45,23 @@
                     Tergabung (<?php echo $jumlah_peserta_join;?> dari <?php echo $jumlah_peserta;?>)<br/>
                     <?php echo $tanggal;?> (<?php echo $waktu;?>)<br/>
                     <?php echo $lokasi;?><br/>
-                    <a style="margin-top: 12px;" href="event.php?id_event=<?php echo $id_event;?>" class="btn btn-primary">Gabung Event</a>
+                    <?php
+                    //check sudah gabung atau belum
+                    if(isset($_SESSION['id_member'])){
+                        $is_join=mysql_query("SELECT * FROM tb_join WHERE id_member=$id_member AND id_event=$id_event");
+                        $ij=mysql_fetch_array($is_join);
+                        if($ij){
+                            echo "<a style=\"margin-top: 12px;\" href=\"event.php?id_event=$id_event\" class=\"btn btn-primary\">Chat Room</a>";
+                        }
+                        else{
+                            echo "<a style=\"margin-top: 12px;\" href=\"event.php?id_event=$id_event\" class=\"btn btn-primary\">Gabung Event</a>";
+                        }
+                    }
+                    else{
+                        echo "<a style=\"margin-top: 12px;\" href=\"event.php?id_event=$id_event\" class=\"btn btn-primary\">Gabung Event</a>";
+                    }
+
+                    ?>
                 </div>
                 <div class="card-footer text-muted">Posted by <a href="#"><?php echo $nama_pj;?></a>
                 </div>

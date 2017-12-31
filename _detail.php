@@ -14,11 +14,23 @@ $tanggal = $c['tanggal'];
 $waktu = $c['waktu'];
 $lokasi = $c['lokasi'];
 $biaya = $c['biaya'];
+$banner = $c['banner_event'];
+$pj_event = $c['pj_event'];
 
 //get jumlah peserta yang join event
 $jum=mysql_query("SELECT COUNT(id_join) FROM tb_join WHERE id_event=$id_event");
 $j=mysql_fetch_array($jum);
 $jumlah_peserta_join = $j['COUNT(id_join)'];
+
+//hapus
+if(isset($_GET['hapus'])) {
+    $id_join=$_GET['hapus'];
+
+    if($id_member!=$pj_event){
+        $hasil=mysql_query("DELETE FROM tb_join WHERE id_join='$id_join'");
+        //muncul alert
+    }
+}
 ?>
 <div class="container">
 
@@ -32,7 +44,7 @@ $jumlah_peserta_join = $j['COUNT(id_join)'];
 
     <div class="row">
         <div class="col-md-8">
-            <img class="img-fluid" src="http://placehold.it/750x500" alt="">
+            <img class="img-fluid" style="width:100%; height: 450px;" src="images/event/<?php echo $banner;?>" alt="<?php echo $banner ?>">
         </div>
         <div class="col-md-4 text-center">
             <h2 class="my-3"><?php echo $nama_event;?></h2>
@@ -51,17 +63,17 @@ $jumlah_peserta_join = $j['COUNT(id_join)'];
             if(isset($_SESSION['id_member'])){
                 $is_join=mysql_query("SELECT * FROM tb_join WHERE id_member=$id_member AND id_event=$id_event");
                 $ij=mysql_fetch_array($is_join);
+                $id_join = $ij['id_join'];
                 if($ij){
-                    echo "<a href=\"#\" class=\"btn btn-primary\">Anda Sudah Tergabung</a>";
+                    echo "<a href=\"event.php?id_event=$id_event&hapus=$id_join\" class=\"btn btn-danger\">Keluar Event</a>";
                 }
                 else{
-                    echo "<a href=\"_join.php?id_event=$id_event\" class=\"btn btn-primary\">Gabung</a>";
+                    echo "<a href=\"_join.php?id_event=$id_event\" class=\"btn btn-primary\">Gabung Event</a>";
                 }
             }
             else{
                 echo "<a href=\"login.php\" class=\"btn btn-primary\">Jika ingin bergabung anda harus Login</a>";
             }
-
             ?>
         </div>
     </div>
@@ -92,10 +104,15 @@ $jumlah_peserta_join = $j['COUNT(id_join)'];
         <?php }?>
     </div>
     <?php
-        $id_member = $_SESSION['id_member'];
-        $member=mysql_query("SELECT * FROM tb_member WHERE id_member=$id_member");
-        $c=mysql_fetch_array($member);
-        $nama_member = $c['nama_member'];
+        if(isset($_SESSION['id_member'])){
+            $id_member = $_SESSION['id_member'];
+            $member=mysql_query("SELECT * FROM tb_member WHERE id_member=$id_member");
+            $c=mysql_fetch_array($member);
+            $nama_member = $c['nama_member'];
+        }
+        else{
+            $nama_member = "";
+        }
     ?>
     
     <h3 class="my-4">Chatroom (<?php echo $nama_member; ?>)</h3>
@@ -103,8 +120,14 @@ $jumlah_peserta_join = $j['COUNT(id_join)'];
         <div class="col-md-12 col-sm-12 mb-4">
             <div class="chat">
                 <?php 
-                if(isset($_SESSION['id_member'])){
+                if(isset($id_join)){
                     include("chatbox.php");
+                }
+                else if(!isset($_SESSION['id_member'])){
+                    echo "Anda belum login !";
+                }
+                else if(isset($_SESSION['id_member'])){
+                    echo "Anda belum gabung event !";
                 }
                 ?>
             </div>

@@ -2,7 +2,7 @@
 <div class="row text-center">
 	<?php
 
-	$latest=mysql_query("SELECT * FROM tb_event, tb_kategori WHERE tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event LIMIT 4");
+	$latest=mysql_query("SELECT * FROM tb_event, tb_kategori WHERE tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event DESC LIMIT 4");
 
 	while($c=mysql_fetch_array($latest)){
 		$id_event = $c['id_event'];
@@ -12,6 +12,7 @@
 		$tanggal = $c['tanggal'];
 		$waktu = $c['waktu'];
 		$lokasi = $c['lokasi'];
+		$banner = $c['banner_event'];
 
 		$jum=mysql_query("SELECT COUNT(id_join) FROM tb_join WHERE id_event=$id_event");
 		$j=mysql_fetch_array($jum);
@@ -19,7 +20,7 @@
 	?>
 	<div class="col-lg-3 col-md-6 mb-4">
 		<div class="card">
-			<img class="card-img-top" src="http://placehold.it/500x325" alt="">
+			<img class="card-img-top" style="height: 150px;" src="images/event/<?php echo $banner;?>" alt="<?php echo $banner ?>">
 			<div class="card-body">
 				<h4 class="card-title"><?php echo $nama_event;?></h4>
                 <h6 class="my-3"><i>Kategori <?php echo $kategori;?></i></h6>

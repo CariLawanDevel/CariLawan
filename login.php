@@ -37,7 +37,6 @@
                 </form>
                 <div class="text-center">
                     <a class="d-block small mt-3" href="register.php">Belum punya akun ? Daftar di sini</a>
-                    <a class="d-block small" href="forgot-password.php">Lupa Password ?</a>
                 </div>
             </div>
         </div>
