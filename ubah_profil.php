@@ -51,7 +51,10 @@ if(isset($_POST['edit'])) {
 
     <title>Website Cari Lawan</title>
 
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
 </head>
 <body>
     <?php include '_header.php'; ?>

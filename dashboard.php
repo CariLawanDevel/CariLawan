@@ -18,6 +18,8 @@ if(isset($_SESSION['id_member'])){
 
     <title>Website Cari Lawan</title>
 
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="css/style.css" rel="stylesheet">

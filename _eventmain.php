@@ -13,10 +13,10 @@
 
             if(isset($_GET['id_kategori'])){
                 $id_kategori=$_GET['id_kategori'];
-                $latest=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori AND tb_kategori.id_kategori=$id_kategori ORDER BY id_event DESC");
+                $latest=mysql_query("SELECT *, DATE_FORMAT(tanggal, \"%w %Y %m %d\"), TIME_FORMAT(waktu, \"%H.%i WIB\"), nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori AND tb_kategori.id_kategori=$id_kategori ORDER BY id_event DESC");
             }
             else{
-                $latest=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event DESC");
+                $latest=mysql_query("SELECT *, DATE_FORMAT(tanggal, \"%w %Y %m %d\"), TIME_FORMAT(waktu, \"%H.%i WIB\"), nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event DESC");
             }
 
             while($c=mysql_fetch_array($latest)){
@@ -25,8 +25,20 @@
                 $deskripsi = $c['deskripsi'];
                 $kategori = $c['nama_kategori'];
                 $jumlah_peserta = $c['jumlah_peserta'];
-                $tanggal = $c['tanggal'];
-                $waktu = $c['waktu'];
+                
+                //format tanggal
+                $tanggal = $c['DATE_FORMAT(tanggal, "%w %Y %m %d")'];
+                $hari_indo = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
+                $bulan_indo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+                $hr = substr($tanggal, 0, 1);
+                $thn = substr($tanggal, 2, 4);
+                $bln = substr($tanggal, 7, 2);
+                $tgl = substr($tanggal, 10, 2);
+                $tanggal_reg = $hari_indo[(int)$hr].", ".$tgl." ".$bulan_indo[(int)$bln-1]." ".$thn;
+
+                //format waktu
+                $waktu = $c['TIME_FORMAT(waktu, "%H.%i WIB")'];
+
                 $lokasi = $c['lokasi'];
                 $nama_pj = $c['nama_member'];
                 $banner = $c['banner_event'];
@@ -43,7 +55,7 @@
                     <h6 class="my-3"><i>Kategori <?php echo $kategori;?></i></h6>
                     <p class="card-text"><?php echo $deskripsi;?><br/>
                     Tergabung (<?php echo $jumlah_peserta_join;?> dari <?php echo $jumlah_peserta;?>)<br/>
-                    <?php echo $tanggal;?> (<?php echo $waktu;?>)<br/>
+                    <?php echo $tanggal_reg;?> (<?php echo $waktu;?>)<br/>
                     <?php echo $lokasi;?><br/>
                     <?php
                     //check sudah gabung atau belum

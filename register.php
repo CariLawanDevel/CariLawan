@@ -8,6 +8,8 @@
 
     <title>Website Cari Lawan</title>
 
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -52,7 +54,7 @@ if(isset($_POST['register'])) {
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
-                                <label for="nama">Nama</label>
+                                <label for="nama">Nama Depan</label>
                                 <input name="nama_depan" class="form-control" id="namaDepan" type="text" aria-describedby="nameHelp" placeholder="Masukkan Nama Depan">
                             </div>
                             <div class="col-md-6">

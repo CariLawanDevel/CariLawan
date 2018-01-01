@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 31, 2017 at 06:52 PM
+-- Generation Time: Jan 01, 2018 at 08:33 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -76,6 +76,21 @@ CREATE TABLE `tb_event` (
   `id_kategori` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_event`
+--
+
+INSERT INTO `tb_event` (`id_event`, `nama_event`, `deskripsi`, `tanggal`, `waktu`, `jumlah_peserta`, `biaya`, `lokasi`, `banner_event`, `pj_event`, `id_kategori`) VALUES
+(1, 'Futsal bareng Alumni MAN 12', 'Buat alumni MAN 12 Jakarta, ayuk gabung ini event, buat ajang silaturahim antar alumni, ditunggu yaa..', '2018-01-12', '09:00:00', 12, 20000, 'Lapangan Futsal Kosambi Baru', 'futsal-1.jpg', 1, 1),
+(2, 'Belajar Badminton', 'Buat yang bisa badminton dan lagi kosong waktunya, join yaa, soalnya mau minta ajarin badminton baut persiapan lomba di sekolah.', '2018-01-02', '08:30:00', 2, 0, 'GOR Grogol', 'badminton-1.jpg', 5, 2),
+(3, 'Car Free Day Dago', 'Buat yang minggunya free daripada di rumah tidur, mending jogging yukk, ditunggu yaa, titik kumpul di depan gasibu', '2018-01-07', '06:00:00', 8, 10000, 'CFD Dago', 'jogging-1.jpg', 4, 4),
+(4, 'Persiapan ISAC', 'Buat anak futsal Informatika UIN Bandung semua angkatan, latihan yuk buat persiapan lomba ISAC.', '2018-01-20', '13:00:00', 12, 20000, 'Lapangan Futsal Mayasari', 'futsal-3.jpg', 15, 1),
+(5, 'Voli UIN Bandung vs Jakarta', 'Laga persahabatan antara tim voli UIN Bandung melawan tim voli UIN Jakarta, buat yang pengen nonton langsung merapat', '2018-01-31', '07:00:00', 30, 5000, 'Lapangan Voli UIN Bandung', 'voli-1.jpg', 12, 3),
+(6, 'Jogging ke Manglayang', 'Buat yang yang nganggur minggu pagi, langsung berangkat yuk ke manglayang, daripada tidur di kosan', '2018-01-20', '06:00:00', 4, 5000, 'Gunung Manglayang', 'jogging-2.png', 10, 4),
+(7, 'Persiapan Universal Open', 'Universal Open adalah ajang lomba yang diadakan oleh Pondok Pesantren Mahasiswa Universal tiap tahunnya, bagi santri universal diharapkan merapat untuk latihan dalam rangka persiapan universal open ini', '2018-01-17', '16:00:00', 12, 7000, 'Lapangan Gomlay', 'voli-2.jpg', 16, 3),
+(8, 'Bulutangkis Go', 'Butuh temen nih buat main badminton di wilayah Bandung, buat yang berminat gabung yaa, ditunggu.', '2018-01-16', '19:30:00', 4, 20000, 'GOR Cikutra', 'badminton-2.jpg', 6, 2),
+(9, 'Futsalicious Jawa Barat 2017', 'Pertandingan Futsal dalam rangka Bacot Festival untuk tingkat SD, SMP, SMA, Mahasiswa seJawa Barat', '2018-02-03', '08:00:00', 32, 200000, 'Lapangan Futsal Progresiv', 'futsal-2.jpg', 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -88,6 +103,23 @@ CREATE TABLE `tb_join` (
   `id_event` int(11) NOT NULL,
   `tanggal_join` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_join`
+--
+
+INSERT INTO `tb_join` (`id_join`, `id_member`, `id_event`, `tanggal_join`) VALUES
+(6, 1, 1, '2018-01-02 00:30:14'),
+(7, 5, 2, '2018-01-02 00:30:14'),
+(8, 4, 3, '2018-01-02 00:30:14'),
+(9, 15, 4, '2018-01-02 00:30:14'),
+(10, 12, 5, '2018-01-02 00:30:14'),
+(11, 10, 6, '2018-01-02 00:30:14'),
+(12, 16, 7, '2018-01-02 00:30:14'),
+(13, 6, 8, '2018-01-02 00:30:14'),
+(14, 2, 9, '2018-01-02 00:30:14'),
+(15, 1, 4, '2018-01-02 00:40:30'),
+(19, 1, 2, '2018-01-02 02:11:02');
 
 -- --------------------------------------------------------
 
@@ -106,7 +138,9 @@ CREATE TABLE `tb_kategori` (
 
 INSERT INTO `tb_kategori` (`id_kategori`, `nama_kategori`) VALUES
 (1, 'Futsal'),
-(2, 'Badminton');
+(2, 'Badminton'),
+(3, 'Voli'),
+(4, 'Jogging');
 
 -- --------------------------------------------------------
 
@@ -126,6 +160,29 @@ CREATE TABLE `tb_member` (
   `foto` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_member`
+--
+
+INSERT INTO `tb_member` (`id_member`, `nama_member`, `jenis_kelamin`, `alamat`, `no_hp`, `email`, `hobi`, `bio`, `foto`) VALUES
+(1, 'Nikko Eka Saputra', 'L', 'Jakarta', '08988190546', 'nikkoeka04@gmail.com', 'Main', 'Everything can be done..', '37152-nikko.jpg'),
+(2, 'Adittya Permana Putra', 'L', 'Jakarta', '087736648298', 'adit@gmail.com', 'Ngaji', 'Lets do it !', 'adit.jpg'),
+(3, 'Ivanka Tri Agustin', 'P', 'Bandung', '08983772466', 'ivanka@gmail.com', 'Baca Buku', 'I am Single and very Happy..', 'ivanka.jpg'),
+(4, 'Manarul Huda', 'L', 'Purwakarta', '08982737467', 'manarul@gmail.com', 'Kumpul', 'Tidak ada yang tidak mungkin..', 'manar.jpg'),
+(5, 'Lili Sholihah', 'P', 'Cirebon', '08988476627', 'lili@gmail.com', 'Novel', 'Siapapun pasti pernah berbuat salah, maka tidak ada hak untuk memojokkan seseorang.', 'lili.png'),
+(6, 'Muhammad Rafif', 'L', 'Bekasi', '088478371942', 'rafif@gmail.com', 'Makan', 'Never give up !', 'rafif.jpg'),
+(7, 'Muhammad Firman Hidayat', 'L', 'Jakarta', '08982744828', 'firman@gmail.com', 'Ngaji', 'Allah is everything..', 'firman.jpg'),
+(8, 'Mawaddah Dila Safitri', 'P', 'Bogor', '08987427374', 'dila@gmail.com', 'Shopping', 'Tidak ada yang tidak mungkin jika Dia sudah berkehendak..', 'dilah.jpg'),
+(9, 'Ghina Salsabillah', 'P', 'Lampung', '08937274661', 'ghina@gmail.com', 'Belajar', 'Everything should be perfect..', 'ghina.png'),
+(10, 'Hendraky Fernanda Aulia', 'L', 'Bekasi', '089247428387', 'nanda@gmail.com', 'Razia', 'I belief i can fly..', 'hendraky.jpg'),
+(11, 'Nidaa ', 'P', 'Bandung', '08642993747', 'nidaa@gmail.com', 'Ngaji', 'Allah dulu, Allah lagi, Allah terus..', 'nidaa.png'),
+(12, 'Filza Adriansyah', 'L', 'Jakarta', '08937826477', 'filza@gmail.com', 'Nyanyi', 'Art is beautiful, sing is art, so sing is beautiful..', 'filza.jpg'),
+(13, 'Jabal Thoriq', 'L', 'Jawa Timur', '08472836647', 'jabal@gmail.com', 'Gaming', 'Go, go and lets go..', 'jabal.jpg'),
+(14, 'Arasya Mutiara', 'P', 'Karawang', '08497371981', 'asya@gmail.com', 'Ngajar', 'It is the best for you..', 'asya.png'),
+(15, 'Raka Sulthon', 'L', 'Bekasi', '08988263747', 'raka@gmai.com', 'Tidur', 'Life is never flat', 'raka.png'),
+(16, 'Ulumuddin ', 'L', 'Lamongan', '08892747281', 'ulum@gmail.com', 'Baca Buku', 'The book is the key', 'ulum.jpg'),
+(17, 'Siti Nurul Aulia', 'P', 'Bandung', '08772466271', 'nurul@gmail.com', 'Masak', 'Never belief a stranger..', 'nurul.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -139,6 +196,29 @@ CREATE TABLE `tb_user` (
   `level` varchar(15) NOT NULL,
   `id_member` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_user`
+--
+
+INSERT INTO `tb_user` (`id`, `username`, `password`, `level`, `id_member`) VALUES
+(1, 'nikko', 'nikko', 'member', 1),
+(2, 'adit', 'adit', 'member', 2),
+(3, 'ivanka', 'ivanka', 'member', 3),
+(4, 'manarul', 'manarul', 'member', 4),
+(5, 'lili', 'lili', 'member', 5),
+(6, 'rafif', 'rafif', 'member', 6),
+(7, 'firman', 'firman', 'member', 7),
+(8, 'dila', 'dila', 'member', 8),
+(9, 'ghina', 'ghina', 'member', 9),
+(10, 'nanda', 'nanda', 'member', 10),
+(11, 'nidaa', 'nidaa', 'member', 11),
+(12, 'filza', 'filza', 'member', 12),
+(13, 'jabal', 'jabal', 'member', 13),
+(14, 'asya', 'asya', 'member', 14),
+(15, 'raka', 'raka', 'member', 15),
+(16, 'ulum', 'ulum', 'member', 16),
+(17, 'nurul', 'nurul', 'member', 17);
 
 --
 -- Indexes for dumped tables
@@ -213,31 +293,31 @@ ALTER TABLE `tb_chat`
 -- AUTO_INCREMENT for table `tb_event`
 --
 ALTER TABLE `tb_event`
-  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_join`
 --
 ALTER TABLE `tb_join`
-  MODIFY `id_join` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_join` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tb_kategori`
 --
 ALTER TABLE `tb_kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_member`
 --
 ALTER TABLE `tb_member`
-  MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables

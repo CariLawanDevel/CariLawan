@@ -44,13 +44,25 @@ if(isset($_GET['hapus'])) {
                         </thead>
                         <tbody>
                             <?php
-                            $sql=mysql_query("SELECT *, nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event");
+                            $sql=mysql_query("SELECT *, DATE_FORMAT(tanggal, \"%w %Y %m %d\"), TIME_FORMAT(waktu, \"%H.%i WIB\"), nama_member FROM tb_member, tb_event, tb_kategori WHERE tb_member.id_member=tb_event.pj_event AND tb_kategori.id_kategori=tb_event.id_kategori ORDER BY id_event");
                             while($data=mysql_fetch_array($sql)){
                                 $id_event=$data['id_event'];
                                 $nama_event=$data['nama_event'];
                                 $deskripsi=$data['deskripsi'];
-                                $tanggal=$data['tanggal'];
-                                $waktu=$data['waktu'];
+
+                                //format tanggal
+                                $tanggal = $data['DATE_FORMAT(tanggal, "%w %Y %m %d")'];
+                                $hari_indo = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
+                                $bulan_indo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+                                $hr = substr($tanggal, 0, 1);
+                                $thn = substr($tanggal, 2, 4);
+                                $bln = substr($tanggal, 7, 2);
+                                $tgl = substr($tanggal, 10, 2);
+                                $tanggal_reg = $hari_indo[(int)$hr].", ".$tgl." ".$bulan_indo[(int)$bln-1]." ".$thn;
+
+                                //format waktu
+                                $waktu = $data['TIME_FORMAT(waktu, "%H.%i WIB")'];
+
                                 $jumlah_peserta = $data['jumlah_peserta'];
                                 $jum=mysql_query("SELECT COUNT(id_join) FROM tb_join WHERE id_event=$id_event");
                                 $j=mysql_fetch_array($jum);
@@ -65,7 +77,7 @@ if(isset($_GET['hapus'])) {
                                 <td><?php echo $id_event ?></td>
                                 <td><?php echo $nama_event ?></td>
                                 <td><?php echo $deskripsi ?></td>
-                                <td><?php echo $tanggal ?></td>
+                                <td><?php echo $tanggal_reg ?></td>
                                 <td><?php echo $waktu ?></td>
                                 <td><?php echo $jumlah_peserta_join;?> of <?php echo $jumlah_peserta;?></td>
                                 <td><?php echo $biaya ?></td>
@@ -85,7 +97,6 @@ if(isset($_GET['hapus'])) {
                     </table>
                 </div>
             </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
     </div>
 </div>

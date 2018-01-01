@@ -3,17 +3,29 @@
 //udah nge get id event
 
 //get detail event
-$event=mysql_query("SELECT * FROM tb_event, tb_kategori WHERE id_event=$id_event AND tb_kategori.id_kategori=tb_event.id_kategori");
+$event=mysql_query("SELECT *, DATE_FORMAT(tanggal, \"%w %Y %m %d\"), TIME_FORMAT(waktu, \"%H.%i WIB\") FROM tb_event, tb_kategori WHERE id_event=$id_event AND tb_kategori.id_kategori=tb_event.id_kategori");
 $c=mysql_fetch_array($event);
 $id_event = $c['id_event'];
 $nama_event = $c['nama_event'];
 $deskripsi = $c['deskripsi'];
 $kategori = $c['nama_kategori'];
 $jumlah_peserta = $c['jumlah_peserta'];
-$tanggal = $c['tanggal'];
-$waktu = $c['waktu'];
+
+//format tanggal
+$tanggal = $c['DATE_FORMAT(tanggal, "%w %Y %m %d")'];
+$hari_indo = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
+$bulan_indo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+$hr = substr($tanggal, 0, 1);
+$thn = substr($tanggal, 2, 4);
+$bln = substr($tanggal, 7, 2);
+$tgl = substr($tanggal, 10, 2);
+$tanggal_reg = $hari_indo[(int)$hr].", ".$tgl." ".$bulan_indo[(int)$bln-1]." ".$thn;
+
+//format waktu
+$waktu = $c['TIME_FORMAT(waktu, "%H.%i WIB")'];
+
 $lokasi = $c['lokasi'];
-$biaya = $c['biaya'];
+$biaya = number_format($c['biaya'], 0,"",".") ;
 $banner = $c['banner_event'];
 $pj_event = $c['pj_event'];
 
@@ -28,7 +40,7 @@ if(isset($_GET['hapus'])) {
 
     if($id_member!=$pj_event){
         $hasil=mysql_query("DELETE FROM tb_join WHERE id_join='$id_join'");
-        //muncul alert
+        header("location:event.php?id_event=$id_event");
     }
 }
 ?>
@@ -53,10 +65,10 @@ if(isset($_GET['hapus'])) {
             <p><?php echo $deskripsi;?></p>
             <h4 class="my-3">Detail Event</h4>
             <p>Peserta : (<?php echo $jumlah_peserta_join;?> dari <?php echo $jumlah_peserta;?>)<br/>
-            Hari/Tanggal : <?php echo $tanggal;?><br/>
+            Hari/Tanggal : <?php echo $tanggal_reg;?><br/>
             Waktu : <?php echo $waktu;?><br/>
             Tempat : <?php echo $lokasi;?><br/>
-            Biaya : <?php echo $biaya;?></p><br/>
+            Biaya : Rp. <?php echo $biaya;?></p><br/>
             <?php
 
             //check sudah gabung atau belum
@@ -68,7 +80,13 @@ if(isset($_GET['hapus'])) {
                     echo "<a href=\"event.php?id_event=$id_event&hapus=$id_join\" class=\"btn btn-danger\">Keluar Event</a>";
                 }
                 else{
-                    echo "<a href=\"_join.php?id_event=$id_event\" class=\"btn btn-primary\">Gabung Event</a>";
+                    //mengecek jika peserta sudah full
+                    if ($jumlah_peserta_join<$jumlah_peserta) {
+                        echo "<a href=\"_join.php?id_event=$id_event\" class=\"btn btn-primary\">Gabung Event</a>";
+                    }
+                    else{
+                        echo "<a href=\"#\" class=\"btn btn-danger\">Peserta Event Full</a>";
+                    }
                 }
             }
             else{

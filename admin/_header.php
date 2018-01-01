@@ -21,7 +21,7 @@
 				<li class="nav-link dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <b>Admin</b></a>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-						<a class="dropdown-item" href="ubah_password.php">Ubah Password</a>
+						<a class="dropdown-item" href="#">Ubah Password</a>
                         <a class="dropdown-item" href="logout.php">Logout</a>
 					</div>
 				</li>

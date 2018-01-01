@@ -6,7 +6,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Website Cari Lawan</title>
+    <title>Management Website Cari Lawan</title>
+
+    <link rel="shortcut icon" type="image/png" href="../images/favicon.png"/>
 
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 

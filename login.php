@@ -10,6 +10,8 @@
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+
     <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 <body class="bg-dark">
