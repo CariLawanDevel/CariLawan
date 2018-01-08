@@ -2,7 +2,7 @@
 <div class="row text-center">
 	<?php
 
-	$latest=mysql_query("SELECT *, DATE_FORMAT(tanggal, \"%w %Y %m %d\"), TIME_FORMAT(waktu, \"%H.%i WIB\") FROM tb_event, tb_kategori WHERE tb_kategori.id_kategori=tb_event.id_kategori AND tanggal>=CURDATE() AND waktu>=CURTIME() ORDER BY tanggal ASC LIMIT 4");
+	$latest=mysql_query("SELECT *, DATE_FORMAT(tanggal, \"%w %Y %m %d\"), TIME_FORMAT(waktu, \"%H.%i WIB\") FROM tb_event, tb_kategori WHERE tb_kategori.id_kategori=tb_event.id_kategori AND (tanggal>=CURDATE() OR waktu>=CURTIME()) ORDER BY tanggal ASC LIMIT 4");
 
 	while($c=mysql_fetch_array($latest)){
 		$id_event = $c['id_event'];
