@@ -91,7 +91,7 @@
 
         <div class="col-md-4">
 
-            <?php include '_search.php'; ?>
+            <?php include '_calendar.php'; ?>
 
             <?php include '_categories.php'; ?>
 
