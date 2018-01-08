@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2018 at 08:33 PM
+-- Generation Time: Jan 08, 2018 at 05:46 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -55,6 +55,16 @@ CREATE TABLE `tb_chat` (
   `isi_chat` text NOT NULL,
   `posted` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_chat`
+--
+
+INSERT INTO `tb_chat` (`id_chat`, `id_event`, `id_member`, `isi_chat`, `posted`) VALUES
+(1, 2, 5, 'kenapa bro ?', '2018-01-08 23:41:44'),
+(2, 2, 5, 'ass', '2018-01-08 23:41:50'),
+(3, 2, 5, 'assalamualaikum..', '2018-01-08 23:42:14'),
+(4, 2, 1, 'gak apa\"..', '2018-01-08 23:42:44');
 
 -- --------------------------------------------------------
 
@@ -119,7 +129,7 @@ INSERT INTO `tb_join` (`id_join`, `id_member`, `id_event`, `tanggal_join`) VALUE
 (13, 6, 8, '2018-01-02 00:30:14'),
 (14, 2, 9, '2018-01-02 00:30:14'),
 (15, 1, 4, '2018-01-02 00:40:30'),
-(19, 1, 2, '2018-01-02 02:11:02');
+(32, 1, 2, '2018-01-08 23:43:23');
 
 -- --------------------------------------------------------
 
@@ -141,6 +151,36 @@ INSERT INTO `tb_kategori` (`id_kategori`, `nama_kategori`) VALUES
 (2, 'Badminton'),
 (3, 'Voli'),
 (4, 'Jogging');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_lokasi`
+--
+
+CREATE TABLE `tb_lokasi` (
+  `id_lokasi` int(11) NOT NULL,
+  `nama_event` varchar(60) NOT NULL,
+  `alamat_lokasi` varchar(60) NOT NULL,
+  `lat` float NOT NULL,
+  `lng` float NOT NULL,
+  `kategori` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_lokasi`
+--
+
+INSERT INTO `tb_lokasi` (`id_lokasi`, `nama_event`, `alamat_lokasi`, `lat`, `lng`, `kategori`) VALUES
+(2, 'Futsal bareng Alumni MAN 12', 'Lapangan Futsal Kosambi Baru', -6.18132, 106.719, 'futsal'),
+(3, 'Belajar Badminton', 'GOR Grogol', -6.17784, 106.781, 'badminton'),
+(4, 'Car Free Day Dago', 'Dago Bandung', -6.87726, 107.617, 'jogging'),
+(5, 'Persiapan ISAC', 'Lapangan Futsal Mayasari', -6.93705, 107.718, 'futsal'),
+(6, 'Voli UIN Bandung vs Jakarta', 'Lapangan Voli UIN Bandung', -6.93145, 107.719, 'voli'),
+(7, 'Jogging ke Manglayang', 'Gunung Manglayang Bandung', -6.87611, 107.744, 'jogging'),
+(8, 'Persiapan Universal Open', 'Lapangan Voli Pesantren Gomlay', 0, 0, 'voli'),
+(9, 'Bulutangkis Go', 'GOR Cikutra', -6.89334, 107.64, 'badminton'),
+(10, 'Futsalicious Jawa Barat 2017', 'Lapangan Futsal Progresiv', -6.93316, 107.686, 'futsal');
 
 -- --------------------------------------------------------
 
@@ -261,6 +301,12 @@ ALTER TABLE `tb_kategori`
   ADD PRIMARY KEY (`id_kategori`);
 
 --
+-- Indexes for table `tb_lokasi`
+--
+ALTER TABLE `tb_lokasi`
+  ADD PRIMARY KEY (`id_lokasi`);
+
+--
 -- Indexes for table `tb_member`
 --
 ALTER TABLE `tb_member`
@@ -287,25 +333,31 @@ ALTER TABLE `tb_admin`
 -- AUTO_INCREMENT for table `tb_chat`
 --
 ALTER TABLE `tb_chat`
-  MODIFY `id_chat` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_chat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_event`
 --
 ALTER TABLE `tb_event`
-  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `tb_join`
 --
 ALTER TABLE `tb_join`
-  MODIFY `id_join` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_join` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `tb_kategori`
 --
 ALTER TABLE `tb_kategori`
   MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tb_lokasi`
+--
+ALTER TABLE `tb_lokasi`
+  MODIFY `id_lokasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `tb_member`

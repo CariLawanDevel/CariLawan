@@ -75,7 +75,7 @@
 
                     ?>
                 </div>
-                <div class="card-footer text-muted">Posted by <a href="#"><?php echo $nama_pj;?></a>
+                <div class="card-footer text-muted">Created by <a href="#"><?php echo $nama_pj;?></a>
                 </div>
             </div>
             <?php }?>
