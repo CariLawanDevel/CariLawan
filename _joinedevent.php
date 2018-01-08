@@ -4,10 +4,14 @@
 
 	if(isset($_GET['hapus'])) {
 	    $id_event=$_GET['hapus'];
+	    $ev=mysql_query("SELECT nama_event FROM tb_event WHERE id_event='$id_event'");
+	    $e=mysql_fetch_array($ev);
+	    $nama_event = $e['nama_event'];
 
 	    $hasil=mysql_query("DELETE FROM tb_chat WHERE id_event='$id_event'");
 	    $hasil=mysql_query("DELETE FROM tb_join WHERE id_event='$id_event'");
 	    $hasil=mysql_query("DELETE FROM tb_event WHERE id_event='$id_event'");
+	    $hasil=mysql_query("DELETE FROM tb_lokasi WHERE nama_event='$nama_event'");
 	    
 	    header("location:dashboard.php");
 	}

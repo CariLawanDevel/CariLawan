@@ -25,18 +25,38 @@ if(isset($_POST['tambah_event'])) {
     $folder="images/event/";
     move_uploaded_file($banner_loc,$folder.$banner_event);
 
-    $hasil=mysql_query("INSERT INTO tb_event SET nama_event='$nama_event', id_kategori='$kategori', deskripsi='$deskripsi', tanggal='$tanggal', waktu='$waktu', jumlah_peserta='$jumlah_peserta', lokasi='$lokasi', biaya='$biaya', banner_event='$banner_event', pj_event='$id_member'");
-    if($hasil){
-        echo "berhasil get member";
-        $get_id=mysql_query("SELECT id_event FROM tb_event WHERE nama_event='$nama_event' AND deskripsi='$deskripsi'") or die (error_reporting());
-        $c=mysql_fetch_array($get_id);
-        $id_event=$c['id_event'];
+    $cat=mysql_query("SELECT nama_kategori FROM tb_kategori WHERE id_kategori='$kategori'");
+    $c=mysql_fetch_array($cat);
+    $nama_kategori = $c['nama_kategori'];
 
-        $join=mysql_query("INSERT INTO tb_join SET id_member='$id_member', id_event='$id_event', tanggal_join='$tanggal'");
-        if($join){
-            header("location:dashboard.php");
+    // $prepAddr = str_replace(' ','+',$lokasi);
+    $prepAddr = urlencode($lokasi);
+
+    $geocode = @file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+
+    $output = json_decode($geocode,true);
+
+    $lat = $output->results[0]->geometry->location->lat;
+    $long = $output->results[0]->geometry->location->lng;
+
+    if($lat!=0 || $long!=0){
+        $hasil=mysql_query("INSERT INTO tb_event SET nama_event='$nama_event', id_kategori='$kategori', deskripsi='$deskripsi', tanggal='$tanggal', waktu='$waktu', jumlah_peserta='$jumlah_peserta', lokasi='$lokasi', biaya='$biaya', banner_event='$banner_event', pj_event='$id_member'");
+        if($hasil){
+            echo "berhasil get member";
+            $get_id=mysql_query("SELECT id_event FROM tb_event WHERE nama_event='$nama_event' AND deskripsi='$deskripsi'") or die (error_reporting());
+            $c=mysql_fetch_array($get_id);
+            $id_event=$c['id_event'];
+
+            $addlokasi=mysql_query("INSERT INTO tb_lokasi SET nama_event='$nama_event', alamat_lokasi='$lokasi', lat='$lat', lng='$long', kategori='$nama_kategori'");
+            $join=mysql_query("INSERT INTO tb_join SET id_member='$id_member', id_event='$id_event', tanggal_join='$tanggal'");
+            if($join){
+                header("location:dashboard.php");
+            }
+            
         }
     }
+
+    
 } 
 
 ?>

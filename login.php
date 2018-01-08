@@ -47,7 +47,6 @@
     <?php
     session_start();
     include('_config.php');
-    include('db_function.php');
 
     $username=@$_POST['username'];
     $password=@$_POST['password'];
