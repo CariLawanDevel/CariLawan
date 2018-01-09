@@ -8,7 +8,11 @@ function getLatitude($address)
 
 	$output = json_decode($geocode);
 
-	$lat = $output->results[0]->geometry->location->lat;
+	$lat = 0;
+
+	if($output->status=="OK"){
+		$lat = $output->results[0]->geometry->location->lat;
+	}
 
 	return $lat;
 }
@@ -21,7 +25,11 @@ function getLongitude($address)
 
 	$output = json_decode($geocode);
 
-	$lng = $output->results[0]->geometry->location->lng;
+	$lng = 0;
+
+	if($output->status=="OK"){
+		$lng = $output->results[0]->geometry->location->lng;
+	}
 
 	return $lng;
 }
